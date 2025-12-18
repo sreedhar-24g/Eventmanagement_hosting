@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+{% load static %} 
+{% load socialaccount %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EventZone - Sign In</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- AOS Animation CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: #f8f9fa;
+        overflow-x: hidden;
+      }
+
+      .navbar-brand i {
+        color: #ff4b2b;
+      }
+      .nav-link:hover {
+        color: #ff4b2b !important;
+        transition: 0.3s;
+      }
+
+      /* Navbar */
+      .navbar {
+        transition: all 0.4s ease;
+      }
+
+      .navbar.scrolled {
+        background-color: #111 !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Hero Section */
+      .hero {
+        background: url("https://images.unsplash.com/photo-1541532713592-79a0317b6b77?auto=format&fit=crop&w=1376&q=80")
+          no-repeat center center;
+        background-size: cover;
+        color: white;
+        height: 55vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+
+      .hero-overlay {
+        background: rgba(0, 0, 0, 0.7);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        animation: fadeIn 2s ease;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        animation: slideDown 1.5s ease;
+      }
+
+      .hero p {
+        animation: fadeInUp 2s ease;
+        font-size: 1.2rem;
+      }
+
+      /* Signin Form */
+      .signin-form {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .signin-form:hover {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-primary {
+        background: linear-gradient(90deg, #007bff, #00c6ff);
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(90deg, #00c6ff, #007bff);
+        transform: scale(1.05);
+      }
+
+      footer {
+        background-color: #222;
+        color: white;
+        padding: 2rem 0;
+        margin-top: 3rem;
+        animation: fadeIn 2s ease;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a
+          class="navbar-brand d-flex align-items-center"
+          href="{% url 'home' %}"
+        >
+          <i class="fa-solid fa-champagne-glasses me-2"></i>
+          <span>EventZone</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'home' %}">Home</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-overlay">
+        <h1 data-aos="fade-down">Welcome!</h1>
+        <p class="lead" data-aos="fade-up" data-aos-delay="300">
+          Sign in to continue planning unforgettable events.
+        </p>
+      </div>
+    </section>
+
+    <!-- Signin Form -->
+    <section id="signin" class="py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div
+            class="col-md-6"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+            data-aos-once="true"
+          >
+            <div class="signin-form">
+              <h3 class="text-center mb-4 fw-bold">Sign In</h3>
+              <form method="POST" action="{% url 'signin' %}">
+                {% csrf_token %} {% if messages %}
+                <div class="alert alert-success" role="alert">
+                  {% for message in messages %} {{ message }} {% endfor %}
+                </div>
+                {% endif %}
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    id="email"
+                    placeholder="Enter username"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Enter Password"
+                    required
+                  />
+                </div>
+                <div class="mb-3 form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="remember"
+                  />
+                  <label class="form-check-label" for="remember"
+                    >Remember me</label
+                  >
+                </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In
+                  </button>
+                </div>
+              </form>
+              <div class="text-center my-3">
+                <span>or</span>
+              </div>
+              <div class="d-grid gap-2">
+                
+                <a href="{% provider_login_url 'google' prompt='select_account consent' %}" class="btn btn-outline-danger">
+  <i class="fa-brands fa-google me-2"></i> Sign in with Google
+</a>
+              </div>
+
+              <p class="text-center mt-3">
+                Don't have an account?
+                <a href="{% url 'signup' %}" class="text-decoration-none"
+                  >Sign Up</a
+                >
+              </p>
+              <p class="text-center mt-2">
+                <a href="#" class="text-decoration-none">Forgot Password?</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+      <div class="container">
+        <p class="mb-0">&copy; 2025 EventZone. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      // Initialize AOS
+      AOS.init();
+
+      // Navbar Scroll Effect
+      window.addEventListener("scroll", function () {
+        const nav = document.querySelector(".navbar");
+        if (window.scrollY > 50) {
+          nav.classList.add("scrolled");
+        } else {
+          nav.classList.remove("scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventZone - Contact Us</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      overflow-x: hidden;
+    }
+
+    
+    .navbar {
+      background: linear-gradient(90deg, #000, #343a40);
+    }
+
+    .navbar-brand i {
+        color: #ff4b2b;
+      }
+      .nav-link:hover {
+        color: #ff4b2b !important;
+        transition: 0.3s;
+      }
+
+    
+    .hero {
+      background: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+      height: 55vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      animation: fadeInUp 1.2s ease-in-out;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #e0e0e0;
+    }
+
+    
+    .contact-section {
+      padding: 4rem 0;
+      background: #fff;
+    }
+
+    .contact-info {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .contact-info:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .contact-info i {
+      font-size: 2rem;
+      color: #007bff;
+      margin-bottom: 1rem;
+    }
+
+    
+    .contact-form {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 2.5rem;
+      animation: fadeInUp 1.3s ease;
+    }
+
+    .contact-form h3 {
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      padding: 0.8rem;
+    }
+
+    .btn-primary {
+      border-radius: 8px;
+      padding: 0.6rem 2rem;
+      transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: #0056b3;
+      transform: scale(1.05);
+    }
+
+  
+    .map iframe {
+      border: none;
+      width: 100%;
+      height: 350px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    
+    footer {
+      background: #111;
+      color: #ccc;
+      padding: 2.5rem 0;
+      text-align: center;
+    }
+
+    footer a {
+      color: #ccc;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: #007bff;
+    }
+
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+        <i class="fa-solid fa-champagne-glasses me-2"></i> EventZone
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'event' %}">Events</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'testimonials' %}">Testimonials</a></li>
+          <li class="nav-item"><a class="nav-link active" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-user"></i> {{request.user}}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'myevents' %}">My Events</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'signout' %}">Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Contact Us</h1>
+      <p>We’re here to help you plan and create unforgettable experiences.</p>
+    </div>
+  </section>
+
+
+  <section class="contact-section">
+    <div class="container">
+      <div class="row text-center mb-5">
+        <div class="col-md-4 mb-4">
+          <div class="contact-info">
+            <i class="fa-solid fa-location-dot"></i>
+            <h5 class="fw-bold mt-2">Visit Us</h5>
+            <p>123 Street, Pothys, Gandhipuram, Coimbatore, 641005</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="contact-info">
+            <i class="fa-solid fa-phone"></i>
+            <h5 class="fw-bold mt-2">Call Us</h5>
+            <p>+91 78974 92342</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="contact-info">
+            <i class="fa-solid fa-envelope"></i>
+            <h5 class="fw-bold mt-2">Email Us</h5>
+            <a href="support@gmail.com" style="text-decoration: none; color: #000;"><p>support@eventzone.com</p></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="contact-form">
+            <h3 class="text-center">Send Us a Message</h3>
+            <form id="contactForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+                </div>
+              </div>
+              <div class="mb-3">
+                <input type="text" id="subject" class="form-control" placeholder="Subject">
+              </div>
+              <div class="mb-3">
+                <textarea id="message" class="form-control" rows="5" placeholder="Your Message..." required></textarea>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary px-4">Send Message</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="map mt-5">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15665.121176995208!2d76.95710774475114!3d11.017584126337601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85855910aed83%3A0x80875de5cd370a9d!2sGandhipuram%2C%20Tamil%20Nadu%20641012!5e0!3m2!1sen!2sin!4v1765979258175!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 EventZone. All Rights Reserved.</p>
+      <div class="mt-2">
+        <a href="https://facebook.com"><i class="fab fa-facebook me-3"></i></a>
+        <a href="https://instagram.com"><i class="fab fa-instagram me-3"></i></a>
+        <a href="https://x.com"><i class="fab fa-twitter me-3"></i></a>
+        <a href="https://linkedin.com"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+  document.querySelector("form").addEventListener("submit", function (e) {
+    e.preventDefault(); 
+    Swal.fire({
+      title: "Message Sent!",
+      text: "Thanks for reaching out — our team will get back to you soon 😊",
+      icon: "success",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#ff416c",
+      background: "#fff",
+      color: "#333",
+    });
+
+    this.reset(); 
+  });
+</script>
+
+</body>
+</html>

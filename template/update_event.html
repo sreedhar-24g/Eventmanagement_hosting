@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EventZone - Your Event, Our Expertise</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+        body {
+      background-color: #f8f9fa;
+    }
+    footer {
+      background-color: #222;
+      color: white;
+      padding: 2rem 0;
+      margin-top: 2rem;
+    }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+          <i class="fa-solid fa-flower me-2"></i> EventZone
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'services' %}">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'event' %}">Event</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'testimonials' %}"
+                >Testimonials</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-solid fa-user"></i> {{request.user}}
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'profile' %}"
+                    >Profile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'myevents' %}"
+                    >My Events</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'signout' %}"
+                    >Log Out</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section id="book-event" class="py-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="booking-form">
+            <h3 class="text-center mb-4">Update Event</h3>
+
+            <!-- {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+              {% endfor %}
+            {% endif %} -->
+
+            <form method="POST" action="/UpdateData/{{data.id}}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="event_name" class="form-label">Event Name</label>
+                <input type="text" name="event_name" class="form-control" value="{{data.eventname}}" id="event_name" placeholder="Give a name to your Event" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="event_type" class="form-label">Event Type</label>
+                <select class="form-select" id="event_type" name="event_type" required>
+                  <option>Select Type</option>
+                  <option value="wedding"{% if data.event_type == "wedding" %}selected{% endif %}>Wedding</option>
+                  <option value="party" {% if data.event_type == "party" %}selected{% endif %}>Party</option>
+                  <option value="birthday" {% if data.event_type == "birthday" %}selected{% endif %}>Birthday Party</option>
+                  <option value="corporate" {% if data.event_type == "corporate" %}selected{% endif %}>Corporate Event</option>
+                  <option value="charity" {% if data.event_type == " charity" %}selected{% endif %}>Charity Function</option>
+                  
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="event_date" class="form-label">Event Date</label>
+                <input type="date" name="date" value="{{ data.date|date:'Y-m-d'}}" class="form-control" id="event_date" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="guest_count" class="form-label">Expected Number of Guests</label>
+                <input type="number"  class="form-control" value="{{data.guest_count}}" id="guest_count" name="guest_count" placeholder="e.g. 150" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="venue" class="form-label">Venue</label>
+                <input type="text" class="form-control" value="{{data.venue}}" id="venue" name="venue" placeholder="Event Venue" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="description" class="form-label">Event Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4" placeholder="Tell us more about your event..." required>{{data.description}}</textarea>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Book Now</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <footer class="text-center">
+      <div class="container">
+        <p>&copy; 2025 EventZone. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

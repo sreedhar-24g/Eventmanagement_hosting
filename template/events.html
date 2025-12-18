@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EventZone - Book Your Event</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      .navbar-brand i {
+        color: #ff4b2b;
+      }
+      .nav-link:hover {
+        color: #ff4b2b !important;
+        transition: 0.3s;
+      }
+
+      .hero {
+        background: url("https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=1470&q=80")
+          no-repeat center center;
+        background-size: cover;
+        height: 55vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+      }
+      .hero > div {
+        position: relative;
+        z-index: 5;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1;
+      }
+
+      .hero h1,
+      .hero p {
+        
+        position: relative; 
+        color: #fff;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        animation: fadeInDown 1s ease-in-out;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        animation: fadeInUp 1s ease-in-out;
+      }
+
+      @keyframes fadeInDown {
+        0% {
+          opacity: 0;
+          transform: translateY(-40px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .booking-section {
+        padding: 4rem 0;
+      }
+
+      .booking-form {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        transition: all 0.3s ease;
+      }
+
+      .booking-form:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-dark {
+        background: linear-gradient(135deg, #222, #444);
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-dark:hover {
+        background: linear-gradient(135deg, #000, #333);
+        transform: scale(1.05);
+      }
+
+      .info-section {
+        padding: 3rem 0;
+        background-color: #fff;
+      }
+
+      .info-box {
+        text-align: center;
+        padding: 2rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .info-box:hover {
+        background: #e9ecef;
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      footer {
+        background: #212529;
+        color: #ccc;
+        padding: 2rem 0;
+        text-align: center;
+      }
+
+      footer p {
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <div class="container">
+        <a
+          class="navbar-brand d-flex align-items-center"
+          href="{% url 'dashboard' %}"
+        >
+          <i class="fa-solid fa-champagne-glasses me-2"></i> EventZone
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'dashboard' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'services' %}">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'event' %}">Event</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'testimonials' %}"
+                >Testimonials</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fa-solid fa-user"></i> {{request.user}}
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'profile' %}"
+                    >Profile</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'myevents' %}"
+                    >My Events</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'signout' %}"
+                    >Log Out</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  
+    <section class="hero">
+      <div data-aos="zoom-in" data-aos-duration="1000">
+        <h1>Book Your Dream Event</h1>
+        <p>
+          We make your ideas come alive with flawless planning and execution.
+        </p>
+      </div>
+    </section>
+
+    
+    <section class="booking-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div
+              class="booking-form"
+              data-aos="fade-up"
+              data-aos-duration="1000"
+            >
+              <h3 class="text-center mb-4">Book Your Event</h3>
+
+              <form method="POST" action="{% url 'booking' %}">
+                {% csrf_token %}
+                <div class="mb-3" data-aos="fade-right" data-aos-delay="100">
+                  <label for="event_name" class="form-label">Event Name</label>
+                  <input
+                    type="text"
+                    name="event_name"
+                    class="form-control"
+                    id="event_name"
+                    placeholder="Give a name to your Event"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3" data-aos="fade-left" data-aos-delay="200">
+                  <label for="event_type" class="form-label">Event Type</label>
+                  <select
+                    class="form-select"
+                    id="event_type"
+                    name="event_type"
+                    required
+                  >
+                    <option>Select Type</option>
+                    <option value="wedding">Wedding</option>
+                    <option value="party">Party</option>
+                    <option value="birthday">Birthday Party</option>
+                    <option value="corporate">Corporate Event</option>
+                    <option value="charity">Charity Function</option>
+                  </select>
+                </div>
+
+                <div class="mb-3" data-aos="fade-right" data-aos-delay="300">
+                  <label for="event_date" class="form-label">Event Date</label>
+                  <input
+                    type="date"
+                    name="date"
+                    class="form-control"
+                    id="event_date"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3" data-aos="fade-left" data-aos-delay="400">
+                  <label for="guest_count" class="form-label"
+                    >Expected Number of Guests</label
+                  >
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="guest_count"
+                    name="guest_count"
+                    placeholder="e.g. 150"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3" data-aos="fade-right" data-aos-delay="500">
+                  <label for="venue" class="form-label">Venue</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="venue"
+                    name="venue"
+                    placeholder="Event Venue"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3" data-aos="fade-left" data-aos-delay="600">
+                  <label for="description" class="form-label"
+                    >Event Description</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="description"
+                    name="description"
+                    rows="4"
+                    placeholder="Tell us more about your event..."
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="d-grid" data-aos="zoom-in" data-aos-delay="700">
+                  <button type="submit" class="btn btn-dark btn-lg">
+                    Book & Post Now
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="info-section">
+      <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+          <h2>Why Book With EventZone?</h2>
+          <p class="text-muted">
+            We handle everything — from concept to completion — to make your
+            event unforgettable.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-4" data-aos="flip-left">
+            <div class="info-box">
+              <i class="fa-solid fa-handshake fa-2x mb-3 text-primary"></i>
+              <h5>Trusted Team</h5>
+              <p>
+                Experienced planners ensuring every detail is perfect and
+                stress-free.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-4" data-aos="flip-up" data-aos-delay="200">
+            <div class="info-box">
+              <i class="fa-solid fa-bolt fa-2x mb-3 text-warning"></i>
+              <h5>Fast & Easy Process</h5>
+              <p>
+                Book your event in just a few clicks with transparent pricing
+                and communication.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-4" data-aos="flip-right" data-aos-delay="400">
+            <div class="info-box">
+              <i class="fa-solid fa-star fa-2x mb-3 text-success"></i>
+              <h5>Memorable Experiences</h5>
+              <p>
+                Our creative team brings your ideas to life in the most magical
+                way possible.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 EventZone. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Services | EventZone</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: "Poppins", sans-serif;
+      color: #222;
+    }
+    .navbar-brand i {
+      color: #ff4b2b;
+    }
+    .nav-link:hover {
+      color: #ff4b2b !important;
+      transition: 0.3s;
+    }
+
+    /* Hero Section */
+    .services-hero {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1653821355736-0c2598d0a63e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1470') no-repeat center center/cover;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .services-hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .services-hero p {
+      font-size: 1.1rem;
+      color: #f1f1f1;
+    }
+
+    /* Service Cards */
+    .service-card {
+      background: #fff;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.4s ease;
+      height: 100%;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .service-card img {
+      height: 250px;
+      object-fit: cover;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .service-card .card-body {
+      padding: 1.5rem;
+    }
+
+    .service-card .icon {
+      font-size: 2rem;
+      color: #ff4b2b;
+      margin-bottom: 15px;
+    }
+
+    /* Process Section */
+    #process {
+      background: linear-gradient(180deg, #fff, #f6f6f6);
+    }
+
+    .step-box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.4s;
+    }
+
+    .step-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .step-icon {
+      font-size: 2rem;
+      color: #ff416c;
+      margin-bottom: 15px;
+    }
+
+    /* CTA */
+    .cta {
+      background: linear-gradient(45deg, #ff4b2b, #ff416c);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .cta a {
+      background: white;
+      color: #ff416c;
+      border-radius: 50px;
+      padding: 10px 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .cta a:hover {
+      background: #ffe4ec;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: rgba(0, 0, 0, 0.9);">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'dashboard' %}">
+        <i class="fa-solid fa-champagne-glasses me-2"></i> EventZone
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="{% url 'services' %}">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'event' %}">Events</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'testimonials' %}">Testimonials</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+              <i class="fa-solid fa-user"></i> {{request.user}}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'myevents' %}">My Events</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'signout' %}">Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="services-hero">
+    <div class="container">
+      <h1>Our Premium Services</h1>
+      <p>We bring your ideas to life with creativity, precision, and passion.</p>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">What We Offer</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card service-card">
+            <img src="https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1470&q=80" alt="">
+            <div class="card-body text-center">
+              <div class="icon"><i class="fa-solid fa-ring"></i></div>
+              <h5>Wedding Planning</h5>
+              <p>From decor to coordination — we make your big day stress-free and magical.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card service-card">
+            <img src="https://images.unsplash.com/photo-1581017381153-d8d61f603589?auto=format&fit=crop&w=1470&q=80" alt="">
+            <div class="card-body text-center">
+              <div class="icon"><i class="fa-solid fa-briefcase"></i></div>
+              <h5>Corporate Events</h5>
+              <p>Professional event setups for conferences, summits, and business galas.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card service-card">
+            <img src="https://images.unsplash.com/photo-1541532713592-79a0317b6b77?auto=format&fit=crop&w=1470&q=80" alt="">
+            <div class="card-body text-center">
+              <div class="icon"><i class="fa-solid fa-cake-candles"></i></div>
+              <h5>Private Parties</h5>
+              <p>Celebrate birthdays, anniversaries, and family moments with style and joy.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">How We Work</h2>
+      <div class="row g-4">
+        <div class="col-md-3 col-6">
+          <div class="step-box text-center">
+            <div class="step-icon"><i class="fa-solid fa-comments"></i></div>
+            <h6>1. Consultation</h6>
+            <p>We listen, understand, and outline your vision.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="step-box text-center">
+            <div class="step-icon"><i class="fa-solid fa-lightbulb"></i></div>
+            <h6>2. Planning</h6>
+            <p>We design and structure your perfect event strategy.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="step-box text-center">
+            <div class="step-icon"><i class="fa-solid fa-gear"></i></div>
+            <h6>3. Execution</h6>
+            <p>Our team handles all logistics and arrangements.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="step-box text-center">
+            <div class="step-icon"><i class="fa-solid fa-star"></i></div>
+            <h6>4. Celebration</h6>
+            <p>Enjoy a flawless event and lasting memories!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to Make Your Event Unforgettable?</h2>
+    <p>Let EventZone bring your vision to life with seamless planning and creative excellence.</p>
+    <a href="{% url 'event' %}">Plan My Event</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center py-4" style="background-color: #111; color: #bbb;">
+    <p>&copy; 2025 EventZone. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
